@@ -1,23 +1,23 @@
 // Import used global libraries
 #include <stdio.h>  // FILE, fopen, fclose, etc.
-#include <string.h> // strtok, strcpy, etc.
 #include <stdlib.h> // malloc, calloc, free, etc.
+#include <string.h> // strtok, strcpy, etc.
 
-// Import the header file of this module, because it has the constant definitions
+// Import the header file of this module, because it has the constant
+// definitions
+#include "../process/process.h"
 #include "manager.h"
 
 /*
  * Splits a string "str" by a separator "sep", returns an array with the
  * resulting strings. Equivalent to Python's str.split(sep).
  */
-static char **split_by_sep(char *str, char *sep)
-{
+static char **split_by_sep(char *str, char *sep) {
   char **new_str = calloc(MAX_SPLIT, sizeof(char *));
   int index = 0, len;
 
   char *token = strtok(str, sep);
-  while (token != NULL)
-  {
+  while (token != NULL) {
     new_str[index] = calloc(BUFFER_SIZE, sizeof(char));
     strcpy(new_str[index++], token);
     token = strtok(NULL, sep);
@@ -35,8 +35,7 @@ static char **split_by_sep(char *str, char *sep)
 /*
  * Reads a line fo user input and returns it as an array of strings
  */
-char **read_user_input()
-{
+char **read_user_input() {
   char *input = calloc(BUFFER_SIZE, sizeof(char));
   fgets(input, BUFFER_SIZE, stdin);
   char **split_input = split_by_sep(input, " ");
@@ -47,10 +46,8 @@ char **read_user_input()
 /*
  * Frees user input obtained by the read_user_input function
  */
-void free_user_input(char **input)
-{
-  for (int i = 0; i < MAX_SPLIT; i++)
-  {
+void free_user_input(char **input) {
+  for (int i = 0; i < MAX_SPLIT; i++) {
     free(input[i]);
   }
   free(input);
